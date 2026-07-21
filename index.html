@@ -3,22 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafija</title>
+    <title>Mafija Online</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; background: #121212; color: #fff; }
+        .card { background: #1e1e1e; padding: 20px; border-radius: 8px; max-width: 400px; margin: auto; }
+        input, button { width: 100%; padding: 10px; margin-top: 10px; box-sizing: border-box; }
+        button { background: #ff4757; color: white; border: none; cursor: pointer; font-weight: bold; }
+        button:hover { background: #ff6b81; }
+        ul { list-style: none; padding: 0; }
+        li { background: #2ed573; color: black; padding: 8px; margin-top: 5px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;}
+        li.dead { background: #747d8c; color: #dcdde1; text-decoration: line-through; }
+        .action-btn { width: auto; padding: 4px 8px; margin: 0; }
+    </style>
 </head>
 <body>
-    <div id="login-screen">
-        <h2>Prisijungti į žaidimą</h2>
-        <input type="text" id="playerName" placeholder="Tavo vardas">
-        <button onclick="joinGame()">Prisijungti</button>
+    <div class="card">
+        <!-- PRISIJUNGIMAS -->
+        <div id="login-screen">
+            <h2>Prisijungti į žaidimą</h2>
+            <input type="text" id="playerName" placeholder="Tavo vardas">
+            <button onclick="joinGame()">Prisijungti</button>
+        </div>
+        
+        <!-- LAUKIAMASIS -->
+        <div id="lobby-screen" style="display:none;">
+            <h2>Laukiamasis</h2>
+            <p>Prisijungę žaidėjai:</p>
+            <ul id="playersList"></ul>
+            <button onclick="requestGameStart()">Pradėti žaidimą (min 6)</button>
+        </div>
+
+        <!-- ŽAIDIMO EKRANAS -->
+        <div id="game-screen" style="display:none;">
+            <h2 id="phaseTitle">Gatvė</h2>
+            <p id="roleDisplay" style="font-weight: bold; color: #eccc68;"></p>
+            <p id="statusMessage"></p>
+            
+            <h3>Miesto gyventojai:</h3>
+            <ul id="gamePlayersList"></ul>
+        </div>
     </div>
-    
-    <div id="lobby-screen" style="display:none;">
-        <h2>Laukiamasis</h2>
-        <p>Prisijungę žaidėjai:</p>
-        <ul id="playersList"></ul>
-    </div>
-    
-    <!-- Socket.io kliento biblioteka -->
+
     <script src="https://cdn.socket.io/4.7.0/socket.io.min.js"></script>
     <script src="client.js"></script>
 </body>
