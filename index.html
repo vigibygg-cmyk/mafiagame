@@ -12,13 +12,15 @@
         button:hover { background: #ff6b81; }
         .secondary-btn { background: #2e86de; }
         .secondary-btn:hover { background: #54a0ff; }
-        .reset-btn { background: #57606f; margin-top: 20px; }
-        .reset-btn:hover { background: #a4b0be; }
+        .reset-btn { background: #e74c3c; margin-top: 20px; }
+        .leave-btn { background: #57606f; margin-top: 20px; }
+        .leave-btn:hover { background: #a4b0be; }
         ul { list-style: none; padding: 0; }
         li { background: #2ed573; color: black; padding: 8px; margin-top: 5px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;}
         li.dead { background: #747d8c; color: #dcdde1; text-decoration: line-through; }
         .action-btn { width: auto; padding: 4px 8px; margin: 0; }
         .room-tag { background: #eccc68; color: #000; padding: 10px; border-radius: 4px; text-align: center; font-weight: bold; margin-bottom: 15px; font-size: 1.2em; }
+        .host-badge { background: #f39c12; color: #fff; padding: 2px 6px; border-radius: 3px; font-size: 0.8em; margin-left: 5px; }
         hr { border: 0; height: 1px; background: #333; margin: 15px 0; }
     </style>
 </head>
@@ -43,7 +45,10 @@
             <h2>Laukiamasis</h2>
             <p>Prisijungę žaidėjai:</p>
             <ul id="playersList"></ul>
-            <button onclick="requestGameStart()">Pradėti žaidimą (min 6)</button>
+            
+            <!-- Tik Host matys šį mygtuką -->
+            <button id="startGameBtn" style="display:none;" onclick="requestGameStart()">Pradėti žaidimą (min 6)</button>
+            <p id="waitingHostMsg" style="color: #aaa; text-align: center;">Laukiama, kol kambario šeimininkas pradės žaidimą...</p>
         </div>
 
         <!-- ŽAIDIMO EKRANAS -->
@@ -57,8 +62,9 @@
             <ul id="gamePlayersList"></ul>
         </div>
 
-        <!-- AVARINIS ATSTATYMAS -->
-        <button class="reset-btn" onclick="resetGame()">IŠEITI / RESET KAMBARĮ</button>
+        <!-- VALDYMO MYGTUKAI -->
+        <button id="leaveRoomBtn" class="leave-btn" style="display:none;" onclick="leaveRoom()">Išeiti iš kambario</button>
+        <button id="resetRoomBtn" class="reset-btn" style="display:none;" onclick="resetGame()">Išvalyti kambarį (RESET)</button>
     </div>
 
     <script src="https://cdn.socket.io/4.7.0/socket.io.min.js"></script>
