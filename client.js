@@ -4,25 +4,52 @@ let myRole = null;
 let myStatus = true;
 let currentPhase = 'LOBBY';
 
+window.onload = () => {
+    const savedName = sessionStorage.getItem('mafia_player_name');
+    const savedRoom = sessionStorage.getItem('mafia_room_code');
+    
+    if (savedName && savedRoom) {
+        document.getElementById('playerName').value = savedName;
+        document.getElementById('roomCodeInput').value = savedRoom;
+        socket.emit('join_game', { playerName: savedName, roomCode: savedRoom });
+    }
+};
+
 function joinGame() {
     const name = document.getElementById('playerName').value.trim();
+    const roomCode = document.getElementById('roomCodeInput').value.trim().toUpperCase();
+    
     if (name === '') {
         alert('Įveskite vardą.');
         return;
     }
-    socket.emit('join_game', name);
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('lobby-screen').style.display = 'block';
+    
+    sessionStorage.setItem('mafia_player_name', name);
+    socket.emit('join_game', { playerName: name, roomCode: roomCode });
 }
 
 function requestGameStart() {
     socket.emit('start_game');
 }
 
-socket.on('update_players', (players) => {
+function resetGame() {
+    if (confirm('Ar tikrai norite atstatyti šį kambarį iš naujo?')) {
+        sessionStorage.removeItem('mafia_player_name');
+        sessionStorage.removeItem('mafia_room_code');
+        socket.emit('reset_game');
+    }
+}
+
+socket.on('update_players', (data) => {
+    sessionStorage.setItem('mafia_room_code', data.roomCode);
+    document.getElementById('displayRoomCode').textContent = data.roomCode;
+
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('lobby-screen').style.display = 'block';
+
     const list = document.getElementById('playersList');
     list.innerHTML = '';
-    players.forEach(player => {
+    data.players.forEach(player => {
         const li = document.createElement('li');
         li.textContent = player.name;
         list.appendChild(li);
@@ -35,8 +62,13 @@ socket.on('error_message', (msg) => {
 
 socket.on('phase_change', (data) => {
     currentPhase = data.phase;
+    sessionStorage.setItem('mafia_room_code', data.roomCode);
+    
+    document.getElementById('login-screen').style.display = 'none';
     document.getElementById('lobby-screen').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
+
+    document.getElementById('displayGameRoomCode').textContent = data.roomCode;
 
     if (data.role) myRole = data.role;
     if (data.isAlive !== undefined) myStatus = data.isAlive;
@@ -74,7 +106,16 @@ socket.on('detective_result', (res) => {
 
 socket.on('game_over', (data) => {
     alert(`ŽAIDIMAS BAIGĖSI! Laimėjo: ${data.winner}`);
-    location.reload(); // Perkrauna puslapį ir grąžina į pradžią
+    sessionStorage.removeItem('mafia_player_name');
+    sessionStorage.removeItem('mafia_room_code');
+    location.reload();
+});
+
+socket.on('game_reset', () => {
+    alert('Kambarys buvo išvalytas arba žaidimas atstatytas iš naujo.');
+    sessionStorage.removeItem('mafia_player_name');
+    sessionStorage.removeItem('mafia_room_code');
+    location.reload();
 });
 
 function renderGamePlayers(players) {
