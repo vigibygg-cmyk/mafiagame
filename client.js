@@ -2,6 +2,7 @@ const socket = io('https://mafia-muw1.onrender.com');
 
 let myRole = null;
 let myStatus = true;
+let amIHost = false;
 let currentPhase = 'LOBBY';
 
 window.onload = () => {
@@ -22,7 +23,6 @@ function createRoom() {
         return;
     }
     sessionStorage.setItem('mafia_player_name', name);
-    // Siunčiame tuščią roomCode, kad serveris sugeneruotų naują kambarį
     socket.emit('join_game', { playerName: name, roomCode: null });
 }
 
@@ -48,28 +48,60 @@ function requestGameStart() {
 }
 
 function resetGame() {
-    if (confirm('Ar tikrai norite atstatyti šį kambarį iš naujo?')) {
-        sessionStorage.removeItem('mafia_player_name');
-        sessionStorage.removeItem('mafia_room_code');
+    if (confirm('Ar tikrai norite atstatyti šį kambarį iš naujo visiems žaidėjams?')) {
         socket.emit('reset_game');
     }
 }
 
-// Serveris atsiunčia atnaujintą žaidėjų sąrašą
+function leaveRoom() {
+    sessionStorage.removeItem('mafia_player_name');
+    sessionStorage.removeItem('mafia_room_code');
+    socket.emit('leave_room');
+    location.reload();
+}
+
+function updateHostUI(players) {
+    const myName = sessionStorage.getItem('mafia_player_name');
+    const me = players.find(p => p.name.toLowerCase() === (myName ? myName.toLowerCase() : ''));
+    
+    amIHost = me ? me.isHost : false;
+
+    // Rodyti arba slėpti mygtukus priklausomai nuo Host statuso
+    if (amIHost) {
+        document.getElementById('startGameBtn').style.display = 'block';
+        document.getElementById('resetRoomBtn').style.display = 'block';
+        document.getElementById('waitingHostMsg').style.display = 'none';
+    } else {
+        document.getElementById('startGameBtn').style.display = 'none';
+        document.getElementById('resetRoomBtn').style.display = 'none';
+        document.getElementById('waitingHostMsg').style.display = 'block';
+    }
+}
+
 socket.on('update_players', (data) => {
     sessionStorage.setItem('mafia_room_code', data.roomCode);
     document.getElementById('displayRoomCode').textContent = data.roomCode;
 
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('lobby-screen').style.display = 'block';
+    document.getElementById('leaveRoomBtn').style.display = 'block';
+
+    updateHostUI(data.players);
 
     const list = document.getElementById('playersList');
     list.innerHTML = '';
     
-    // Čia atvaizduojami visi prisijungę žaidėjai
     data.players.forEach(player => {
         const li = document.createElement('li');
         li.textContent = player.name;
+        
+        if (player.isHost) {
+            const badge = document.createElement('span');
+            badge.className = 'host-badge';
+            badge.textContent = 'HOST';
+            li.appendChild(badge);
+        }
+        
         list.appendChild(li);
     });
 });
@@ -85,8 +117,11 @@ socket.on('phase_change', (data) => {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('lobby-screen').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
+    document.getElementById('leaveRoomBtn').style.display = 'block';
 
     document.getElementById('displayGameRoomCode').textContent = data.roomCode;
+
+    updateHostUI(data.players);
 
     if (data.role) myRole = data.role;
     if (data.isAlive !== undefined) myStatus = data.isAlive;
@@ -130,7 +165,7 @@ socket.on('game_over', (data) => {
 });
 
 socket.on('game_reset', () => {
-    alert('Kambarys buvo išvalytas arba žaidimas atstatytas iš naujo.');
+    alert('Kambarys buvo išvalytas arba atstatytas iš naujo.');
     sessionStorage.removeItem('mafia_player_name');
     sessionStorage.removeItem('mafia_room_code');
     location.reload();
