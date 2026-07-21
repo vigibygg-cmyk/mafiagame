@@ -4,10 +4,11 @@ let myRole = null;
 let myStatus = true;
 let amIHost = false;
 let currentPhase = 'LOBBY';
-let currentLang = 'lt';
+let currentLang = 'en';
 
 const I18N = {
     lt: {
+        GAME_TITLE: "Mafija Online",
         btn_help: "Pagalba", title_login: "Prisijungti", btn_create: "Sukurti naują kambarį (Tapti Hostu)",
         btn_join: "Prisijungti prie esamo kambario", title_lobby: "Laukiamasis", lbl_room: "Kambarys",
         lbl_players: "Prisijungę žaidėjai:", btn_start: "Pradėti žaidimą (min 6)", msg_wait_host: "Laukiama, kol Hostas pradės žaidimą...",
@@ -32,6 +33,7 @@ const I18N = {
         HELP_TEXT: "<b>ŽAIDIMO TIKSLAS:</b><br>Gerieji laimi išmetę visą Mafiją. Mafija laimi, kai jų skaičius susilygina su gerųjų.<br><br><b>VAIDMENYS:</b><br>🕴️ <b>Mafija:</b> Naktį atsibunda ir pasirenka auką.<br>🏥 <b>Medikas:</b> Naktį pasirenka žaidėją, kurį išgydys.<br>🕵️ <b>Detektyvas:</b> Naktį patikrina vieno žaidėjo tapatybę.<br>👤 <b>Miestietis:</b> Naktį miega, dieną ieško mafijos.<br><br><b>EIGA:</b><br>1. <b>Naktis:</b> Visi atlieka savo slaptus veiksmus.<br>2. <b>Diena:</b> Paskelbiami rezultatai. Vyksta gyva diskusija.<br>3. <b>Balsavimas:</b> Žaidėjai atiduoda balsą ekrane. Daugiausiai balsų surinkęs žaidėjas prieš iškrentant privalo pasakyti <b>gynybinę kalbą</b>."
     },
     en: {
+        GAME_TITLE: "Mafia Online",
         btn_help: "Help", title_login: "Join Game", btn_create: "Create New Room (Become Host)",
         btn_join: "Join Existing Room", title_lobby: "Lobby", lbl_room: "Room",
         lbl_players: "Connected Players:", btn_start: "Start Game (min 6)", msg_wait_host: "Waiting for host to start...",
@@ -56,6 +58,7 @@ const I18N = {
         HELP_TEXT: "<b>GOAL:</b><br>Citizens win by eliminating all Mafia. Mafia wins when their numbers equal the Citizens.<br><br><b>ROLES:</b><br>🕴️ <b>Mafia:</b> Kills at night.<br>🏥 <b>Doctor:</b> Protects one player at night.<br>🕵️ <b>Detective:</b> Checks one player's role at night.<br>👤 <b>Citizen:</b> Sleeps at night, hunts mafia by day.<br><br><b>FLOW:</b><br>1. <b>Night:</b> Secret actions are taken on the phone.<br>2. <b>Day:</b> Results are announced. Live discussion happens.<br>3. <b>Voting:</b> Players vote on screen. The suspect with the most votes must give a <b>defense speech</b> before being eliminated."
     },
     no: {
+        GAME_TITLE: "Mafia Online",
         btn_help: "Hjelp", title_login: "Bli med", btn_create: "Opprett nytt rom (Bli Vert)",
         btn_join: "Bli med i eksisterende rom", title_lobby: "Lobby", lbl_room: "Rom",
         lbl_players: "Tilkoblede spillere:", btn_start: "Start spill (min 6)", msg_wait_host: "Venter på vert...",
@@ -87,6 +90,7 @@ function t(key) {
 
 function changeLanguage() {
     currentLang = document.getElementById('langSelect').value;
+    document.title = t('GAME_TITLE');
     document.querySelectorAll('[data-i18n]').forEach(el => {
         el.innerHTML = t(el.getAttribute('data-i18n'));
     });
