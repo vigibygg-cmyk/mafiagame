@@ -15,12 +15,27 @@ window.onload = () => {
     }
 };
 
-function joinGame() {
+function createRoom() {
+    const name = document.getElementById('playerName').value.trim();
+    if (name === '') {
+        alert('Įveskite savo vardą!');
+        return;
+    }
+    sessionStorage.setItem('mafia_player_name', name);
+    // Siunčiame tuščią roomCode, kad serveris sugeneruotų naują kambarį
+    socket.emit('join_game', { playerName: name, roomCode: null });
+}
+
+function joinRoom() {
     const name = document.getElementById('playerName').value.trim();
     const roomCode = document.getElementById('roomCodeInput').value.trim().toUpperCase();
     
     if (name === '') {
-        alert('Įveskite vardą.');
+        alert('Įveskite savo vardą!');
+        return;
+    }
+    if (roomCode === '') {
+        alert('Įveskite kambario kodą!');
         return;
     }
     
@@ -40,6 +55,7 @@ function resetGame() {
     }
 }
 
+// Serveris atsiunčia atnaujintą žaidėjų sąrašą
 socket.on('update_players', (data) => {
     sessionStorage.setItem('mafia_room_code', data.roomCode);
     document.getElementById('displayRoomCode').textContent = data.roomCode;
@@ -49,6 +65,8 @@ socket.on('update_players', (data) => {
 
     const list = document.getElementById('playersList');
     list.innerHTML = '';
+    
+    // Čia atvaizduojami visi prisijungę žaidėjai
     data.players.forEach(player => {
         const li = document.createElement('li');
         li.textContent = player.name;
