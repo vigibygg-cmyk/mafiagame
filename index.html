@@ -24,12 +24,10 @@
         .host-badge { background: #f39c12; color: #fff; padding: 2px 6px; border-radius: 3px; font-size: 0.8em; margin-left: 5px; }
         hr { border: 0; height: 1px; background: #333; margin: 15px 0; }
         
-        /* Language & Help overlay */
         .top-controls { display: flex; justify-content: space-between; margin-bottom: 15px; }
         .lang-select { width: 100px; padding: 5px; margin: 0; }
         .help-btn { width: auto; padding: 5px 15px; margin: 0; background: #f39c12; }
 
-        /* Modal */
         .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); }
         .modal-content { background-color: #1e1e1e; margin: 10% auto; padding: 20px; border: 1px solid #888; width: 90%; max-width: 500px; border-radius: 8px; }
         .close-modal { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
@@ -50,11 +48,11 @@
 
         <div id="login-screen">
             <h2 data-i18n="title_login">Prisijungti į žaidimą</h2>
-            <input type="text" id="playerName" placeholder="Tavo vardas" data-i18n-ph="ph_name">
-            <button onclick="createRoom()" data-i18n="btn_create">Sukurti naują kambarį</button>
+            <input type="text" id="playerName" placeholder="Įvesk savo vardą" data-i18n-ph="ph_name">
+            <button onclick="createRoom()" data-i18n="btn_create">Sukurti naują kambarį (Tapti Hostu)</button>
             <hr>
-            <input type="text" id="roomCodeInput" placeholder="Kambario kodas" data-i18n-ph="ph_room">
-            <button class="secondary-btn" onclick="joinRoom()" data-i18n="btn_join">Prisijungti prie kambario</button>
+            <input type="text" id="roomCodeInput" placeholder="Įvesk kambario kodą" data-i18n-ph="ph_room">
+            <button class="secondary-btn" onclick="joinRoom()" data-i18n="btn_join">Prisijungti prie esamo kambario</button>
         </div>
         
         <div id="lobby-screen" style="display:none;">
@@ -63,7 +61,7 @@
             <p data-i18n="lbl_players">Prisijungę žaidėjai:</p>
             <ul id="playersList"></ul>
             <button id="startGameBtn" style="display:none;" onclick="requestGameStart()" data-i18n="btn_start">Pradėti žaidimą (min 6)</button>
-            <p id="waitingHostMsg" style="color: #aaa; text-align: center;" data-i18n="msg_wait_host">Laukiama šeimininko...</p>
+            <p id="waitingHostMsg" style="color: #aaa; text-align: center;" data-i18n="msg_wait_host">Laukiama, kol Hostas pradės žaidimą...</p>
         </div>
 
         <div id="game-screen" style="display:none;">
@@ -79,18 +77,18 @@
             <h2 data-i18n="title_game_over">Žaidimas baigėsi!</h2>
             <h3 id="winnerText" style="color: #eccc68;"></h3>
             <ul id="summaryList"></ul>
-            <button id="playAgainBtn" class="success-btn" style="display:none;" onclick="playAgain()" data-i18n="btn_play_again">Žaisti dar kartą</button>
+            <button id="playAgainBtn" class="success-btn" style="display:none;" onclick="playAgain()" data-i18n="btn_play_again">Žaisti dar kartą šiame kambaryje</button>
         </div>
 
-        <button id="leaveRoomBtn" class="leave-btn" style="display:none;" onclick="leaveRoom()" data-i18n="btn_leave">Išeiti iš kambario</button>
-        <button id="resetRoomBtn" class="reset-btn" style="display:none;" onclick="resetGame()" data-i18n="btn_reset">Išvalyti kambarį (RESET)</button>
+        <button id="leaveRoomBtn" class="leave-btn" style="display:none;" onclick="leaveRoom()" data-i18n="btn_leave">Išeiti iš kambario į pradinį meniu</button>
+        <button id="resetRoomBtn" class="reset-btn" style="display:none;" onclick="resetGame()" data-i18n="btn_reset">Ištrinti kambarį visiems (RESET)</button>
     </div>
 
     <!-- Taisyklių Modal -->
     <div id="helpModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeHelp()">&times;</span>
-            <h2 data-i18n="help_title">Taisyklės ir Valdymas</h2>
+            <h2 data-i18n="help_title">Taisyklės</h2>
             <div id="helpContent" style="line-height: 1.5; font-size: 0.9em;"></div>
         </div>
     </div>
