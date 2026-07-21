@@ -18,17 +18,23 @@
         li { background: #2ed573; color: black; padding: 8px; margin-top: 5px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;}
         li.dead { background: #747d8c; color: #dcdde1; text-decoration: line-through; }
         .action-btn { width: auto; padding: 4px 8px; margin: 0; }
-        .room-tag { background: #eccc68; color: #000; padding: 5px; border-radius: 4px; text-align: center; font-weight: bold; margin-bottom: 15px; }
+        .room-tag { background: #eccc68; color: #000; padding: 10px; border-radius: 4px; text-align: center; font-weight: bold; margin-bottom: 15px; font-size: 1.2em; }
+        hr { border: 0; height: 1px; background: #333; margin: 15px 0; }
     </style>
 </head>
 <body>
     <div class="card">
-        <!-- PRISIJUNGIMAS -->
+        <!-- PRISIJUNGIMAS / KŪRIMAS -->
         <div id="login-screen">
             <h2>Prisijungti į žaidimą</h2>
             <input type="text" id="playerName" placeholder="Tavo vardas">
-            <input type="text" id="roomCodeInput" placeholder="Kambario kodas (Palik tuščią sukūrimui)">
-            <button onclick="joinGame()">Prisijungti / Sukurti kambarį</button>
+            
+            <button onclick="createRoom()">Sukurti naują kambarį</button>
+            
+            <hr>
+            
+            <input type="text" id="roomCodeInput" placeholder="Kambario kodas (pvz. A8B2)">
+            <button class="secondary-btn" onclick="joinRoom()">Prisijungti prie kambario</button>
         </div>
         
         <!-- LAUKIAMASIS -->
