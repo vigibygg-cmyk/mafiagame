@@ -16,7 +16,6 @@ function joinGame() {
 }
 
 function requestGameStart() {
-    console.log('Siunčiamas mygtuko paspaudimas į serverį...');
     socket.emit('start_game');
 }
 
@@ -31,11 +30,10 @@ socket.on('update_players', (players) => {
 });
 
 socket.on('error_message', (msg) => {
-    alert('KLAIDA IŠ SERVERIO: ' + msg);
+    alert('KLAIDA: ' + msg);
 });
 
 socket.on('phase_change', (data) => {
-    console.log('Gautas fazės pakeitimas:', data);
     currentPhase = data.phase;
     document.getElementById('lobby-screen').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
@@ -74,6 +72,11 @@ socket.on('detective_result', (res) => {
     alert(`Detektyvo ataskaita: Žaidėjas ${res.targetName} yra ${res.isMafia ? 'MAFIJA!' : 'TAIKUS CIVILIS.'}`);
 });
 
+socket.on('game_over', (data) => {
+    alert(`ŽAIDIMAS BAIGĖSI! Laimėjo: ${data.winner}`);
+    location.reload(); // Perkrauna puslapį ir grąžina į pradžią
+});
+
 function renderGamePlayers(players) {
     const list = document.getElementById('gamePlayersList');
     list.innerHTML = '';
@@ -88,13 +91,21 @@ function renderGamePlayers(players) {
                 const btn = document.createElement('button');
                 btn.className = 'action-btn';
                 btn.textContent = 'Pasirinkti';
-                btn.onclick = () => socket.emit('night_action', p.id);
+                btn.onclick = () => {
+                    socket.emit('night_action', p.id);
+                    btn.disabled = true;
+                    btn.textContent = 'Pasirinkta';
+                };
                 li.appendChild(btn);
             } else if (currentPhase === 'DAY_VOTING') {
                 const btn = document.createElement('button');
                 btn.className = 'action-btn';
                 btn.textContent = 'Balsuoti';
-                btn.onclick = () => socket.emit('cast_vote', p.id);
+                btn.onclick = () => {
+                    socket.emit('cast_vote', p.id);
+                    btn.disabled = true;
+                    btn.textContent = 'Pabalsuota';
+                };
                 li.appendChild(btn);
             }
         }
