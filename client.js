@@ -12,9 +12,9 @@ const I18N = {
         btn_join: "Prisijungti prie esamo kambario", title_lobby: "Laukiamasis", lbl_room: "Kambarys",
         lbl_players: "Prisijungę žaidėjai:", btn_start: "Pradėti žaidimą (min 6)", msg_wait_host: "Laukiama, kol Hostas pradės žaidimą...",
         lbl_citizens: "Miesto gyventojai:", title_game_over: "Žaidimas baigėsi!", btn_play_again: "Žaisti dar kartą šiame kambaryje",
-        btn_leave: "Išeiti iš kambario į pradinį meniu", btn_reset: "Ištrinti kambarį visiems (RESET)", help_title: "Taisyklės",
+        btn_leave: "Išeiti iš kambario į pradinį meniu", btn_reset: "Ištrinti kambarį visiems (RESET)", help_title: "Taisyklės ir Eiga",
         ph_name: "Įvesk savo vardą", ph_room: "Įvesk kambario kodą",
-        ROLE_MAFIA: "Mafija", ROLE_DETECTIVE: "Detektyvas", ROLE_DOCTOR: "Daktaras", ROLE_CITIZEN: "Miestietis",
+        ROLE_MAFIA: "Mafija", ROLE_DETECTIVE: "Detektyvas", ROLE_DOCTOR: "Medikas", ROLE_CITIZEN: "Miestietis",
         ROLE_UNKNOWN: "Nežinomas",
         WIN_MAFIA: "Laimėjo MAFIJA!", WIN_CITIZENS: "Laimėjo TAIKŪS GYVENTOJAI!",
         PHASE_NIGHT: "🌙 Naktis", PHASE_DAY: "☀️ Diena ir Balsavimas",
@@ -29,14 +29,14 @@ const I18N = {
         ERR_NOT_HOST: "Tik šeimininkas (Host) gali tai padaryti.", ERR_NEED_6: "Trūksta žaidėjų (min 6).",
         ERR_NOT_HOST_RESET: "Tik šeimininkas gali ištrinti kambarį.",
         CONFIRM_RESET: "Ar tikrai ištrinti kambarį visiems žaidėjams?", MSG_ROOM_DELETED: "Kambarys buvo ištrintas Hosto arba dėl neveiklumo.",
-        HELP_TEXT: "<b>Vaidmenys:</b><br>- Mafija: Naktį pasirenka auką.<br>- Daktaras: Naktį pasirenka vieną žaidėją, kurį išgydys.<br>- Detektyvas: Naktį patikrina vieno žaidėjo tapatybę.<br>- Miestietis: Dienos metu balsuoja, kas yra mafija.<br><br><b>Eiga:</b> Naktį specialūs vaidmenys atlieka veiksmus. Dieną paskelbiami rezultatai ir atliekamas atviras balsavimas."
+        HELP_TEXT: "<b>ŽAIDIMO TIKSLAS:</b><br>Gerieji laimi išmetę visą Mafiją. Mafija laimi, kai jų skaičius susilygina su gerųjų.<br><br><b>VAIDMENYS:</b><br>🕴️ <b>Mafija:</b> Naktį atsibunda ir pasirenka auką.<br>🏥 <b>Medikas:</b> Naktį pasirenka žaidėją, kurį išgydys.<br>🕵️ <b>Detektyvas:</b> Naktį patikrina vieno žaidėjo tapatybę.<br>👤 <b>Miestietis:</b> Naktį miega, dieną ieško mafijos.<br><br><b>EIGA:</b><br>1. <b>Naktis:</b> Visi atlieka savo slaptus veiksmus.<br>2. <b>Diena:</b> Paskelbiami rezultatai. Vyksta gyva diskusija.<br>3. <b>Balsavimas:</b> Žaidėjai atiduoda balsą ekrane. Daugiausiai balsų surinkęs žaidėjas prieš iškrentant privalo pasakyti <b>gynybinę kalbą</b>."
     },
     en: {
         btn_help: "Help", title_login: "Join Game", btn_create: "Create New Room (Become Host)",
         btn_join: "Join Existing Room", title_lobby: "Lobby", lbl_room: "Room",
         lbl_players: "Connected Players:", btn_start: "Start Game (min 6)", msg_wait_host: "Waiting for host to start...",
         lbl_citizens: "Citizens:", title_game_over: "Game Over!", btn_play_again: "Play Again in this room",
-        btn_leave: "Leave room to Main Menu", btn_reset: "Delete room for everyone (RESET)", help_title: "Rules",
+        btn_leave: "Leave room to Main Menu", btn_reset: "Delete room for everyone (RESET)", help_title: "Rules and Flow",
         ph_name: "Enter your name", ph_room: "Enter room code",
         ROLE_MAFIA: "Mafia", ROLE_DETECTIVE: "Detective", ROLE_DOCTOR: "Doctor", ROLE_CITIZEN: "Citizen",
         ROLE_UNKNOWN: "Unknown",
@@ -53,18 +53,18 @@ const I18N = {
         ERR_NOT_HOST: "Only Host can do this.", ERR_NEED_6: "Not enough players (min 6).",
         ERR_NOT_HOST_RESET: "Only Host can delete the room.",
         CONFIRM_RESET: "Delete room for everyone?", MSG_ROOM_DELETED: "Room has been deleted by Host or due to inactivity.",
-        HELP_TEXT: "<b>Roles:</b><br>- Mafia: Kills at night.<br>- Doctor: Protects at night.<br>- Detective: Checks roles at night.<br>- Citizen: Votes during the day.<br><br><b>Flow:</b> Night actions -> Day results -> Voting to eliminate a suspect."
+        HELP_TEXT: "<b>GOAL:</b><br>Citizens win by eliminating all Mafia. Mafia wins when their numbers equal the Citizens.<br><br><b>ROLES:</b><br>🕴️ <b>Mafia:</b> Kills at night.<br>🏥 <b>Doctor:</b> Protects one player at night.<br>🕵️ <b>Detective:</b> Checks one player's role at night.<br>👤 <b>Citizen:</b> Sleeps at night, hunts mafia by day.<br><br><b>FLOW:</b><br>1. <b>Night:</b> Secret actions are taken on the phone.<br>2. <b>Day:</b> Results are announced. Live discussion happens.<br>3. <b>Voting:</b> Players vote on screen. The suspect with the most votes must give a <b>defense speech</b> before being eliminated."
     },
     no: {
         btn_help: "Hjelp", title_login: "Bli med", btn_create: "Opprett nytt rom (Bli Vert)",
         btn_join: "Bli med i eksisterende rom", title_lobby: "Lobby", lbl_room: "Rom",
         lbl_players: "Tilkoblede spillere:", btn_start: "Start spill (min 6)", msg_wait_host: "Venter på vert...",
-        lbl_citizens: "Innbyggere:", title_game_over: "Spillet er over!", btn_play_again: "Spill igjen i dette rommet",
-        btn_leave: "Forlat rommet til Hovedmenyen", btn_reset: "Slett rom for alle (RESET)", help_title: "Regler",
+        lbl_citizens: "Borgere:", title_game_over: "Spillet er over!", btn_play_again: "Spill igjen i dette rommet",
+        btn_leave: "Forlat rommet til Hovedmenyen", btn_reset: "Slett rom for alle (RESET)", help_title: "Regler og Spillgang",
         ph_name: "Skriv inn navnet ditt", ph_room: "Skriv inn romkode",
-        ROLE_MAFIA: "Mafia", ROLE_DETECTIVE: "Detektiv", ROLE_DOCTOR: "Doktor", ROLE_CITIZEN: "Innbygger",
+        ROLE_MAFIA: "Mafia", ROLE_DETECTIVE: "Detektiv", ROLE_DOCTOR: "Lege", ROLE_CITIZEN: "Borger",
         ROLE_UNKNOWN: "Ukjent",
-        WIN_MAFIA: "MAFIA Vinner!", WIN_CITIZENS: "INNBYGGERNE Vinner!",
+        WIN_MAFIA: "MAFIA Vinner!", WIN_CITIZENS: "BORGERNE Vinner!",
         PHASE_NIGHT: "🌙 Natt", PHASE_DAY: "☀️ Dag & Avstemning",
         MSG_DEAD: "Du er død. Du kan bare se på.", MSG_MAFIA_ACTION: "Velg hvem du vil drepe:",
         MSG_DOCTOR_ACTION: "Velg hvem du vil beskytte:", MSG_DETECTIVE_ACTION: "Velg hvem du vil etterforske:",
@@ -77,7 +77,7 @@ const I18N = {
         ERR_NOT_HOST: "Bare verten (Host) kan gjøre dette.", ERR_NEED_6: "Ikke nok spillere (min 6).",
         ERR_NOT_HOST_RESET: "Bare verten kan slette rommet.",
         CONFIRM_RESET: "Er du sikker på at du vil slette rommet for alle?", MSG_ROOM_DELETED: "Rommet er slettet av verten eller pga. inaktivitet.",
-        HELP_TEXT: "<b>Roller:</b><br>- Mafia: Dreper om natten.<br>- Doktor: Beskytter en spiller om natten.<br>- Detektiv: Sjekker rollen til en spiller.<br>- Innbygger: Stemmer om dagen for å kaste ut mafiaen.<br><br><b>Forløp:</b> Spesialroller handler om natten. Om dagen diskuteres resultatene og det stemmes over hvem som er mistenkt."
+        HELP_TEXT: "<b>MÅL MED SPILLET:</b><br>De gode vinner ved å eliminere all Mafia. Mafia vinner når antallet deres er likt de gode.<br><br><b>ROLLER:</b><br>🕴️ <b>Mafia:</b> Velger et offer om natten.<br>🏥 <b>Lege:</b> Velger en spiller å beskytte om natten.<br>🕵️ <b>Detektiv:</b> Sjekker en spillers identitet om natten.<br>👤 <b>Borger:</b> Sover om natten. Leter etter mafiaen om dagen.<br><br><b>GANG I SPILLET:</b><br>1. <b>Natt:</b> Alle utfører sine hemmelige handlinger.<br>2. <b>Dag:</b> Nattens resultater kunngjøres. Åpen diskusjon.<br>3. <b>Avstemning:</b> Spillerne stemmer på skjermen. Den med flest stemmer har rett til en <b>forsvarstale</b> før de eventuelt elimineres."
     }
 };
 
