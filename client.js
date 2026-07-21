@@ -31,50 +31,45 @@ const I18N = {
         CONFIRM_RESET: "Ar tikrai ištrinti kambarį visiems?", MSG_ROOM_DELETED: "Kambarys buvo ištrintas.",
         title_defense: "Gynybinė Kalba", msg_defense_speech: "sako gynybinę kalbą. Ar išmesti šį žaidėją iš miestelio?",
         btn_yes: "TAIP (Išmesti)", btn_no: "NE (Atsisakyti)",
-        HELP_TEXT: `
-        <h3>1. PAGRINDINIS ŽAIDIMAS</h3>
-        <b>Apie žaidimą:</b> Visi dalyviai yra vieno miestelio gyventojai. Vieną naktį į miestelį atsikrausto Mafija. Po kiekvienos nakties randamas lavonas. Dienos metu gyventojai rengia posėdį ir išmeta vieną įtariamąjį.<br><br>
-        <b>Žaidimo tikslas:</b><br>
-        • <b>Gerieji (Miestiečiai):</b> Laimi, kai išmesti visi mafijos nariai.<br>
-        • <b>Blogieji (Mafija):</b> Laimi, kai jų skaičius susilygina su gerųjų skaičiumi.<br>
-        • <b>Neutralieji (Vienišius):</b> Laimi, jei lieka vienas iš trijų paskutinių gyvų žaidėjų.<br><br>
-        <b>Vaidmenų paskirstymas pagal žaidėjus:</b><br>
-        • 6–8 žaidėjai: 1 Mafija, 1 Policija/Detektyvas, 1 Medikas.<br>
-        • 8–12 žaidėjų: 2 Mafijos, 1 Detektyvas, 1–2 Medikai.<br>
-        • 12–18 žaidėjų: 3 Mafijos, 1–2 Detektyvai, 2 Medikai.<br>
-        • 18–20 žaidėjų: 4 Mafijos, 2 Detektyvai, 2 Medikai.<br><br>
-        <b>Dienos eiga ir Gynybinė kalba:</b><br>
-        Dieną vyksta posėdis (5–10 min). Daugumą balsų surinkęs įtariamasis įgyja teisę pasakyti <b>gynybinę kalbą</b>. Po jos miestelis balsuoja TAIP/NE – ar išmesti žaidėją. Miręs žaidėjas atverčia savo kortelę ir nebegali bendrauti.
-
-        <hr>
-        <h3>2. VAIDMENŲ KATALOGAS</h3>
-        • <b>Mafija:</b> Naktį žudo miestiečius.<br>
-        • <b>Krikštatėvis (Mafija):</b> Negali būti išbalsuotas dieną, kol gyvas bent vienas kitas mafiozas.<br>
-        • <b>Policija / Detektyvas:</b> Naktį tikrina įtartinų žaidėjų tapatybę.<br>
-        • <b>Medikas:</b> Naktį gydo pasirinktą žaidėją.<br>
-        • <b>Hakeris:</b> Naktį užblokuoja žaidėją – jis kitą dieną negali kalbėti ir balsuoti.<br>
-        • <b>Vienišius:</b> Neutralus. Siekia išlikti paskutinis.<br>
-        • <b>Superherojus:</b> Naktį bando nužudyti mafiją, bet gali netyčia nužudyti ir civilį.<br>
-        • <b>Vampyras:</b> Išbalsuotas dieną gali pasirinkti kurią naktį atsigauti kaip vampyras.<br>
-        • <b>Jėzus:</b> Paprastas miestietis, kuris miręs prisikelia po 3 dienų.<br>
-        • <b>Šarvuotis:</b> Negali būti nužudytas mafijos naktį, tik išbalsuotas dieną.<br>
-        • <b>Meras:</b> Pasiskelbęs meru gauna 3 balsus vietoj 1, bet nebegali būti gydomas.<br>
-        • <b>Akis:</b> Naktį slapta mato, kas yra Mafija. Jei mafija pastebi – nužudo.<br>
-        • <b>Vagis:</b> Naktį atima kito žaidėjo specialų veiksmą.
-
-        <hr>
-        <h3>3. VAIDMENŲ MODIFIKACIJOS (MAFIJOS NAUDAI)</h3>
-        • <b>Naivus policininkas:</b> Visus patikrintus mato kaip taikius.<br>
-        • <b>Paranojiškas policininkas:</b> Visus patikrintus mato kaip mafiją.<br>
-        • <b>Girtas policininkas:</b> Nužudo tą, kurį bando ištirti.<br>
-        • <b>Beprotis detektyvas:</b> Gauna atsitiktinius atsakymus.<br>
-        • <b>Nevykęs medikas:</b> Išgydydamas atima to žaidėjo nakties veiksmą.
-
-        <hr>
-        <h3>4. KITOS ŽAIDIMO VERSIJOS</h3>
-        • <b>„Miestelis užmiega vienintelį kartą“ (Misijų režimas):</b> Nėra mirties ir nakties. Žaidėjai vykdo 3–5 misijas. Miestiečiai bando įvykdyti misijas, Mafija – sužlugdyti.<br>
-        • <b>„Žaidimas Tamsoje“:</b> Aktyvus žaidimas visiškoje tamsoje. Mafija žudo perbraukdama per kaklą, lavonai atsitupia ir šaukia „Žmogžudystė!`.
-        `
+        HELP_TEXT: "<h3>1. PAGRINDINIS ŽAIDIMAS</h3>" +
+        "<b>Apie žaidimą:</b> Visi dalyviai yra vieno miestelio gyventojai. Vieną naktį į miestelį atsikrausto Mafija. Po kiekvienos nakties randamas lavonas. Dienos metu gyventojai rengia posėdį ir išmeta vieną įtariamąjį.<br><br>" +
+        "<b>Žaidimo tikslas:</b><br>" +
+        "• <b>Gerieji (Miestiečiai):</b> Laimi, kai išmesti visi mafijos nariai.<br>" +
+        "• <b>Blogieji (Mafija):</b> Laimi, kai jų skaičius susilygina su gerųjų skaičiumi.<br>" +
+        "• <b>Neutralieji (Vienišius):</b> Laimi, jei lieka vienas iš trijų paskutinių gyvų žaidėjų.<br><br>" +
+        "<b>Vaidmenų paskirstymas pagal žaidėjus:</b><br>" +
+        "• 6–8 žaidėjai: 1 Mafija, 1 Policija/Detektyvas, 1 Medikas.<br>" +
+        "• 8–12 žaidėjų: 2 Mafijos, 1 Detektyvas, 1–2 Medikai.<br>" +
+        "• 12–18 žaidėjų: 3 Mafijos, 1–2 Detektyvai, 2 Medikai.<br>" +
+        "• 18–20 žaidėjų: 4 Mafijos, 2 Detektyvai, 2 Medikai.<br><br>" +
+        "<b>Dienos eiga ir Gynybinė kalba:</b><br>" +
+        "Dieną vyksta posėdis (5–10 min). Daugumą balsų surinkęs įtariamasis įgyja teisę pasakyti <b>gynybinę kalbą</b>. Po jos miestelis balsuoja TAIP/NE – ar išmesti žaidėją. Miręs žaidėjas atverčia savo kortelę ir nebegali bendrauti." +
+        "<hr>" +
+        "<h3>2. VAIDMENŲ KATALOGAS</h3>" +
+        "• <b>Mafija:</b> Naktį žudo miestiečius.<br>" +
+        "• <b>Krikštatėvis (Mafija):</b> Negali būti išbalsuotas dieną, kol gyvas bent vienas kitas mafiozas.<br>" +
+        "• <b>Policija / Detektyvas:</b> Naktį tikrina įtartinų žaidėjų tapatybę.<br>" +
+        "• <b>Medikas:</b> Naktį gydo pasirinktą žaidėją.<br>" +
+        "• <b>Hakeris:</b> Naktį užblokuoja žaidėją – jis kitą dieną negali kalbėti ir balsuoti.<br>" +
+        "• <b>Vienišius:</b> Neutralus. Siekia išlikti paskutinis.<br>" +
+        "• <b>Superherojus:</b> Naktį bando nužudyti mafiją, bet gali netyčia nužudyti ir civilį.<br>" +
+        "• <b>Vampyras:</b> Išbalsuotas dieną gali pasirinkti kurią naktį atsigauti kaip vampyras.<br>" +
+        "• <b>Jėzus:</b> Paprastas miestietis, kuris miręs prisikelia po 3 dienų.<br>" +
+        "• <b>Šarvuotis:</b> Negali būti nužudytas mafijos naktį, tik išbalsuotas dieną.<br>" +
+        "• <b>Meras:</b> Pasiskelbęs meru gauna 3 balsus vietoj 1, bet nebegali būti gydomas.<br>" +
+        "• <b>Akis:</b> Naktį slapta mato, kas yra Mafija. Jei mafija pastebi – nužudo.<br>" +
+        "• <b>Vagis:</b> Naktį atima kito žaidėjo specialų veiksmą." +
+        "<hr>" +
+        "<h3>3. VAIDMENŲ MODIFIKACIJOS (MAFIJOS NAUDAI)</h3>" +
+        "• <b>Naivus policininkas:</b> Visus patikrintus mato kaip taikius.<br>" +
+        "• <b>Paranojiškas policininkas:</b> Visus patikrintus mato kaip mafiją.<br>" +
+        "• <b>Girtas policininkas:</b> Nužudo tą, kurį bando ištirti.<br>" +
+        "• <b>Beprotis detektyvas:</b> Gauna atsitiktinius atsakymus.<br>" +
+        "• <b>Nevykęs medikas:</b> Išgydydamas atima to žaidėjo nakties veiksmą." +
+        "<hr>" +
+        "<h3>4. KITOS ŽAIDIMO VERSIJOS</h3>" +
+        "• <b>Miestelis užmiega vienintelį kartą (Misijų režimas):</b> Nėra mirties ir nakties. Žaidėjai vykdo 3–5 misijas. Miestiečiai bando įvykdyti misijas, Mafija – sužlugdyti.<br>" +
+        "• <b>Žaidimas Tamsoje:</b> Aktyvus žaidimas visiškoje tamsoje. Mafija žudo perbraukdama per kaklą, lavonai atsitupia ir šaukia Žmogžudystė!"
     },
     en: {
         GAME_TITLE: "Mafia Online",
@@ -99,50 +94,45 @@ const I18N = {
         CONFIRM_RESET: "Delete room for everyone?", MSG_ROOM_DELETED: "Room deleted.",
         title_defense: "Defense Speech", msg_defense_speech: "is giving a defense speech. Eliminate this player?",
         btn_yes: "YES (Eliminate)", btn_no: "NO (Keep)",
-        HELP_TEXT: `
-        <h3>1. MAIN GAME</h3>
-        <b>About:</b> All players are citizens of a town invaded by Mafia. Each night someone dies. During the day, citizens discuss and vote to eliminate a suspect.<br><br>
-        <b>Winning Conditions:</b><br>
-        • <b>Citizens:</b> Win when all Mafia members are eliminated.<br>
-        • <b>Mafia:</b> Wins when Mafia count equals the number of Citizens.<br>
-        • <b>Loner (Neutral):</b> Wins if they are one of the last 3 survivors.<br><br>
-        <b>Role Ratio:</b><br>
-        • 6–8 players: 1 Mafia, 1 Detective, 1 Doctor.<br>
-        • 8–12 players: 2 Mafias, 1 Detective, 1–2 Doctors.<br>
-        • 12–18 players: 3 Mafias, 1–2 Detectives, 2 Doctors.<br>
-        • 18–20 players: 4 Mafias, 2 Detectives, 2 Doctors.<br><br>
-        <b>Defense Speech:</b><br>
-        The most voted player gives a <b>defense speech</b>. Town then votes YES/NO on elimination. Dead players reveal their role and stay silent.
-
-        <hr>
-        <h3>2. ROLES CATALOG</h3>
-        • <b>Mafia:</b> Kills citizens at night.<br>
-        • <b>Godfather:</b> Immune to day elimination while other Mafia are alive.<br>
-        • <b>Detective/Police:</b> Investigates player roles at night.<br>
-        • <b>Doctor:</b> Heals a target at night.<br>
-        • <b>Hacker:</b> Blocks a player from talking and voting the next day.<br>
-        • <b>Loner:</b> Neutral, aims to be the last survivor.<br>
-        • <b>Superhero:</b> Kills suspects at night, risks killing innocents.<br>
-        • <b>Vampire:</b> Can revive as a vampire after day elimination.<br>
-        • <b>Jesus:</b> Revives 3 days after dying.<br>
-        • <b>Armored:</b> Immune to night mafia kills.<br>
-        • <b>Mayor:</b> Can reveal themselves for 3 votes, but loses healing.<br>
-        • <b>Eye:</b> Peeks at Mafia at night, dies if spotted.<br>
-        • <b>Thief:</b> Steals another player's night action.
-
-        <hr>
-        <h3>3. MAFIA MODIFIERS</h3>
-        • <b>Naive Cop:</b> Sees everyone as innocent.<br>
-        • <b>Paranoid Cop:</b> Sees everyone as Mafia.<br>
-        • <b>Drunk Cop:</b> Kills whoever they investigate.<br>
-        • <b>Mad Detective:</b> Gets random inspection answers.<br>
-        • <b>Clumsy Doctor:</b> Heals target but strips their night action.
-
-        <hr>
-        <h3>4. OTHER GAME MODES</h3>
-        • <b>Mission Mode (One-Time Night):</b> No player elimination. Teams complete 3–5 missions.<br>
-        • <b>Darkness Mode:</b> Physical game played in total darkness with touches.
-        `
+        HELP_TEXT: "<h3>1. MAIN GAME</h3>" +
+        "<b>About:</b> All players are citizens of a town invaded by Mafia. Each night someone dies. During the day, citizens discuss and vote to eliminate a suspect.<br><br>" +
+        "<b>Winning Conditions:</b><br>" +
+        "• <b>Citizens:</b> Win when all Mafia members are eliminated.<br>" +
+        "• <b>Mafia:</b> Wins when Mafia count equals the number of Citizens.<br>" +
+        "• <b>Loner (Neutral):</b> Wins if they are one of the last 3 survivors.<br><br>" +
+        "<b>Role Ratio:</b><br>" +
+        "• 6–8 players: 1 Mafia, 1 Detective, 1 Doctor.<br>" +
+        "• 8–12 players: 2 Mafias, 1 Detective, 1–2 Doctors.<br>" +
+        "• 12–18 players: 3 Mafias, 1–2 Detectives, 2 Doctors.<br>" +
+        "• 18–20 players: 4 Mafias, 2 Detectives, 2 Doctors.<br><br>" +
+        "<b>Defense Speech:</b><br>" +
+        "The most voted player gives a <b>defense speech</b>. Town then votes YES/NO on elimination. Dead players reveal their role and stay silent." +
+        "<hr>" +
+        "<h3>2. ROLES CATALOG</h3>" +
+        "• <b>Mafia:</b> Kills citizens at night.<br>" +
+        "• <b>Godfather:</b> Immune to day elimination while other Mafia are alive.<br>" +
+        "• <b>Detective/Police:</b> Investigates player roles at night.<br>" +
+        "• <b>Doctor:</b> Heals a target at night.<br>" +
+        "• <b>Hacker:</b> Blocks a player from talking and voting the next day.<br>" +
+        "• <b>Loner:</b> Neutral, aims to be the last survivor.<br>" +
+        "• <b>Superhero:</b> Kills suspects at night, risks killing innocents.<br>" +
+        "• <b>Vampire:</b> Can revive as a vampire after day elimination.<br>" +
+        "• <b>Jesus:</b> Revives 3 days after dying.<br>" +
+        "• <b>Armored:</b> Immune to night mafia kills.<br>" +
+        "• <b>Mayor:</b> Can reveal themselves for 3 votes, but loses healing.<br>" +
+        "• <b>Eye:</b> Peeks at Mafia at night, dies if spotted.<br>" +
+        "• <b>Thief:</b> Steals another player's night action." +
+        "<hr>" +
+        "<h3>3. MAFIA MODIFIERS</h3>" +
+        "• <b>Naive Cop:</b> Sees everyone as innocent.<br>" +
+        "• <b>Paranoid Cop:</b> Sees everyone as Mafia.<br>" +
+        "• <b>Drunk Cop:</b> Kills whoever they investigate.<br>" +
+        "• <b>Mad Detective:</b> Gets random inspection answers.<br>" +
+        "• <b>Clumsy Doctor:</b> Heals target but strips their night action." +
+        "<hr>" +
+        "<h3>4. OTHER GAME MODES</h3>" +
+        "• <b>Mission Mode (One-Time Night):</b> No player elimination. Teams complete 3–5 missions.<br>" +
+        "• <b>Darkness Mode:</b> Physical game played in total darkness with touches."
     },
     no: {
         GAME_TITLE: "Mafia Online",
@@ -167,50 +157,45 @@ const I18N = {
         CONFIRM_RESET: "Slett rom for alle?", MSG_ROOM_DELETED: "Rom slettet.",
         title_defense: "Forsvarstale", msg_defense_speech: "holder en forsvarstale. Eliminere denne spilleren?",
         btn_yes: "JA (Eliminer)", btn_no: "NEI (Behold)",
-        HELP_TEXT: `
-        <h3>1. HOVEDSPILL</h3>
-        <b>Om spillet:</b> Innbyggerne i en by er truet av Mafia. Hver natt dør noen. Om dagen stemmer borgerne over hvem som skal elimineres.<br><br>
-        <b>Seiersbetingelser:</b><br>
-        • <b>Borgere:</b> Vinner når all Mafia er eliminert.<br>
-        • <b>Mafia:</b> Vinner når antall Mafia er likt antall Borgere.<br>
-        • <b>Eneboer (Nøytral):</b> Vinner hvis de er en av de 3 siste overlevende.<br><br>
-        <b>Rollefordeling:</b><br>
-        • 6–8 spillere: 1 Mafia, 1 Detektiv, 1 Lege.<br>
-        • 8–12 spillere: 2 Mafiaer, 1 Detektiv, 1–2 Leger.<br>
-        • 12–18 spillere: 3 Mafiaer, 1–2 Detektiver, 2 Leger.<br>
-        • 18–20 spillere: 4 Mafiaer, 2 Detektiver, 2 Leger.<br><br>
-        <b>Forsvarstale:</b><br>
-        Mistenkt holder en <b>forsvarstale</b>. Deretter stemmes det JA/NEI om eliminering. Døde spillere viser rollen sin og må tie.
-
-        <hr>
-        <h3>2. ROLLEKATALOG</h3>
-        • <b>Mafia:</b> Dreper borgere om natten.<br>
-        • <b>Gudfar:</b> Immun mot dagavstemning så lenge annen Mafia lever.<br>
-        • <b>Detektiv/Politi:</b> Sjekker roller om natten.<br>
-        • <b>Lege:</b> Helbreder en spiller om natten.<br>
-        • <b>Hacker:</b> Blokkerer en spiller fra å snakke/stemme neste dag.<br>
-        • <b>Eneboer:</b> Nøytral, prøver å overleve til slutt.<br>
-        • <b>Superhelt:</b> Jakter mafia om natten, kan treffe sivile.<br>
-        • <b>Vampyr:</b> Kan våkne som vampyr etter eliminering.<br>
-        • <b>Jesus:</b> Gjenoppstår 3 dager etter død.<br>
-        • <b>Pansret:</b> Immun mot nattlige skudd fra mafia.<br>
-        • <b>Borgermester:</b> Har 3 stemmer, men kan ikke helbredes.<br>
-        • <b>Øye:</b> Kigger på mafiaen om natten.<br>
-        • <b>Tyv:</b> Stjeler nattfunksjonen til en annen spiller.
-
-        <hr>
-        <h3>3. MAFIAMODIFIKASJONER</h3>
-        • <b>Naiv politi:</b> Ser alle som uskyldige.<br>
-        • <b>Paranoid politi:</b> Ser alle som Mafia.<br>
-        • <b>Beruset politi:</b> Dreper den de etterforsker.<br>
-        • <b>Gal detektiv:</b> Får tilfeldige svar.<br>
-        • <b>Mislykket lege:</b> Helbreder, men fjerner nattfunksjonen.
-
-        <hr>
-        <h3>4. ANDRE SPILLMODUSER</h3>
-        • <b>Misjonsmodus (Engangs-natt):</b> Ingen eliminering. Lagene utfører 3–5 oppdrag.<br>
-        • <b>Mørkemodus:</b> Fysisk spill i mørket med berøring.
-        `
+        HELP_TEXT: "<h3>1. HOVEDSPILL</h3>" +
+        "<b>Om spillet:</b> Innbyggerne i en by er truet av Mafia. Hver natt dør noen. Om dagen stemmer borgerne over hvem som skal elimineres.<br><br>" +
+        "<b>Seiersbetingelser:</b><br>" +
+        "• <b>Borgere:</b> Vinner når all Mafia er eliminert.<br>" +
+        "• <b>Mafia:</b> Vinner når antall Mafia er likt antall Borgere.<br>" +
+        "• <b>Eneboer (Nøytral):</b> Vinner hvis de er en av de 3 siste overlevende.<br><br>" +
+        "<b>Rollefordeling:</b><br>" +
+        "• 6–8 spillere: 1 Mafia, 1 Detektiv, 1 Lege.<br>" +
+        "• 8–12 spillere: 2 Mafiaer, 1 Detektiv, 1–2 Leger.<br>" +
+        "• 12–18 spillere: 3 Mafiaer, 1–2 Detektiver, 2 Leger.<br>" +
+        "• 18–20 spillere: 4 Mafiaer, 2 Detektiver, 2 Leger.<br><br>" +
+        "<b>Forsvarstale:</b><br>" +
+        "Mistenkt holder en <b>forsvarstale</b>. Deretter stemmes det JA/NEI om eliminering. Døde spillere viser rollen sin og må tie." +
+        "<hr>" +
+        "<h3>2. ROLLEKATALOG</h3>" +
+        "• <b>Mafia:</b> Dreper borgere om natten.<br>" +
+        "• <b>Gudfar:</b> Immun mot dagavstemning så lenge annen Mafia lever.<br>" +
+        "• <b>Detektiv/Politi:</b> Sjekker roller om natten.<br>" +
+        "• <b>Lege:</b> Helbreder en spiller om natten.<br>" +
+        "• <b>Hacker:</b> Blokkerer en spiller fra å snakke/stemme neste dag.<br>" +
+        "• <b>Eneboer:</b> Nøytral, prøver å overleve til slutt.<br>" +
+        "• <b>Superhelt:</b> Jakter mafia om natten, kan treffe sivile.<br>" +
+        "• <b>Vampyr:</b> Kan våkne som vampyr etter eliminering.<br>" +
+        "• <b>Jesus:</b> Gjenoppstår 3 dager etter død.<br>" +
+        "• <b>Pansret:</b> Immun mot nattlige skudd fra mafia.<br>" +
+        "• <b>Borgermester:</b> Har 3 stemmer, men kan ikke helbredes.<br>" +
+        "• <b>Øye:</b> Kigger på mafiaen om natten.<br>" +
+        "• <b>Tyv:</b> Stjeler nattfunksjonen til en annen spiller." +
+        "<hr>" +
+        "<h3>3. MAFIAMODIFIKASJONER</h3>" +
+        "• <b>Naiv politi:</b> Ser alle som uskyldige.<br>" +
+        "• <b>Paranoid politi:</b> Ser alle som Mafia.<br>" +
+        "• <b>Beruset politi:</b> Dreper den de etterforsker.<br>" +
+        "• <b>Gal detektiv:</b> Får tilfeldige svar.<br>" +
+        "• <b>Mislykket lege:</b> Helbreder, men fjerner nattfunksjonen." +
+        "<hr>" +
+        "<h3>4. ANDRE SPILLMODUSER</h3>" +
+        "• <b>Misjonsmodus (Engangs-natt):</b> Ingen eliminering. Lagene utfører 3–5 oppdrag.<br>" +
+        "• <b>Mørkemodus:</b> Fysisk spill i mørket med berøring."
     }
 };
 
