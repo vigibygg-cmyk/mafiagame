@@ -1,7 +1,7 @@
 const socket = io('https://mafia-muw1.onrender.com');
 
 let myRole = null;
-let myStatus = true; // isAlive
+let myStatus = true;
 let currentPhase = 'LOBBY';
 
 function joinGame() {
@@ -16,6 +16,7 @@ function joinGame() {
 }
 
 function requestGameStart() {
+    console.log('Siunčiamas mygtuko paspaudimas į serverį...');
     socket.emit('start_game');
 }
 
@@ -30,11 +31,11 @@ socket.on('update_players', (players) => {
 });
 
 socket.on('error_message', (msg) => {
-    alert(msg);
+    alert('KLAIDA IŠ SERVERIO: ' + msg);
 });
 
-// Fazių valdymas ir sąsajos atnaujinimas
 socket.on('phase_change', (data) => {
+    console.log('Gautas fazės pakeitimas:', data);
     currentPhase = data.phase;
     document.getElementById('lobby-screen').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
@@ -82,7 +83,6 @@ function renderGamePlayers(players) {
         li.textContent = p.name + (p.isAlive ? '' : ' 💀 (Miręs)');
         if (!p.isAlive) li.classList.add('dead');
 
-        // Veiksmų mygtukai gyviems žaidėjams
         if (myStatus && p.isAlive) {
             if (currentPhase === 'NIGHT' && (myRole === 'MAFIJA' || myRole === 'DAKTARAS' || myRole === 'DETEKTYVAS')) {
                 const btn = document.createElement('button');
