@@ -5,8 +5,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mafia Online</title>
     <style>
-        body { font-family: sans-serif; margin: 20px; background: #121212; color: #fff; }
-        .card { background: #1e1e1e; padding: 20px; border-radius: 8px; max-width: 400px; margin: auto; position: relative; }
+        html, body { height: 100%; }
+        body { font-family: sans-serif; margin: 20px; background: #0b0b12; color: #fff; overflow-x: hidden; position: relative; }
+        .card { background: rgba(22,22,28,0.82); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding: 20px; border-radius: 8px; max-width: 400px; margin: auto; position: relative; z-index: 1; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
+
+        /* ====== ATMOSFEROS FONAS (naktis / diena / laukiamasis) ====== */
+        .bg-scene { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
+        .bg-layer { position: absolute; inset: 0; opacity: 0; transition: opacity 3s ease; }
+        body.phase-night .bg-night { opacity: 1; }
+        body.phase-day .bg-day { opacity: 1; }
+        body.phase-lobby .bg-lobby { opacity: 1; }
+
+        .bg-night { background: linear-gradient(180deg, #05050d 0%, #0e0f1e 55%, #171a2e 100%); }
+        .bg-night .stars {
+            position: absolute; inset: 0;
+            background-image:
+                radial-gradient(1.5px 1.5px at 10% 20%, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 25% 65%, #fff, transparent),
+                radial-gradient(1px 1px at 40% 15%, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 60% 40%, #fff, transparent),
+                radial-gradient(1px 1px at 75% 75%, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 85% 25%, #fff, transparent),
+                radial-gradient(1px 1px at 92% 55%, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 15% 85%, #fff, transparent);
+            opacity: 0.5;
+            animation: twinkle 5s ease-in-out infinite alternate;
+        }
+        @keyframes twinkle { from { opacity: 0.25; } to { opacity: 0.7; } }
+        .bg-night .fog {
+            position: absolute; width: 220%; height: 40%; bottom: 0; left: -60%;
+            background: radial-gradient(ellipse at center, rgba(180,190,220,0.06) 0%, transparent 70%);
+            filter: blur(10px);
+        }
+        .bg-night .fog1 { animation: driftRight 70s linear infinite; }
+        .bg-night .fog2 { bottom: 5%; animation: driftLeft 95s linear infinite; opacity: 0.6; }
+        @keyframes driftRight { from { transform: translateX(0); } to { transform: translateX(30%); } }
+        @keyframes driftLeft { from { transform: translateX(0); } to { transform: translateX(-30%); } }
+        .bg-night .flashlight {
+            position: absolute; width: 45vmax; height: 45vmax; top: -20%; left: -20%;
+            background: radial-gradient(circle, rgba(255,244,200,0.05) 0%, transparent 65%);
+            animation: sweep 26s ease-in-out infinite;
+        }
+        @keyframes sweep {
+            0%   { transform: translate(0,0); }
+            50%  { transform: translate(60vw, 40vh); }
+            100% { transform: translate(0,0); }
+        }
+        .bg-night .skyline, .bg-day .skyline {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 18vh;
+            background:
+                linear-gradient(90deg, transparent 0 4%, #000 4% 9%, transparent 9% 13%,
+                #000 13% 20%, transparent 20% 24%, #000 24% 33%, transparent 33% 38%,
+                #000 38% 46%, transparent 46% 52%, #000 52% 60%, transparent 60% 65%,
+                #000 65% 74%, transparent 74% 79%, #000 79% 88%, transparent 88% 93%, #000 93% 100%);
+            opacity: 0.55;
+        }
+        .bg-day .skyline { filter: brightness(1) sepia(0.4); opacity: 0.18; }
+
+        .bg-day { background: linear-gradient(180deg, #cdae79 0%, #e6cf9b 45%, #f3e7c8 100%); }
+        .bg-day .sun-rays {
+            position: absolute; top: -30%; right: -10%; width: 90vmax; height: 90vmax;
+            background: conic-gradient(from 0deg, rgba(255,244,200,0.10), transparent 8%, transparent 16%, rgba(255,244,200,0.08) 20%, transparent 30%, transparent 45%, rgba(255,244,200,0.07) 50%, transparent 60%);
+            animation: rotateSlow 140s linear infinite;
+            opacity: 0.7;
+        }
+        @keyframes rotateSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .bg-day .dust {
+            position: absolute; inset: 0;
+            background-image:
+                radial-gradient(2px 2px at 20% 80%, rgba(90,70,30,0.35), transparent),
+                radial-gradient(1.5px 1.5px at 45% 60%, rgba(90,70,30,0.3), transparent),
+                radial-gradient(2px 2px at 65% 90%, rgba(90,70,30,0.3), transparent),
+                radial-gradient(1.5px 1.5px at 80% 50%, rgba(90,70,30,0.25), transparent),
+                radial-gradient(2px 2px at 90% 75%, rgba(90,70,30,0.3), transparent);
+            animation: driftUp 40s linear infinite;
+        }
+        @keyframes driftUp { from { transform: translateY(0); opacity: 0.8; } to { transform: translateY(-60vh); opacity: 0; } }
+
+        .bg-lobby { background: linear-gradient(180deg, #1a140f 0%, #241c14 100%); }
+        .bg-lobby .searchlight {
+            position: absolute; width: 55vmax; height: 55vmax; top: 10%; left: 10%;
+            background: radial-gradient(circle, rgba(255,220,150,0.07) 0%, transparent 60%);
+            animation: roam 34s ease-in-out infinite;
+        }
+        @keyframes roam {
+            0%   { transform: translate(0,0); }
+            33%  { transform: translate(40vw, 10vh); }
+            66%  { transform: translate(10vw, 45vh); }
+            100% { transform: translate(0,0); }
+        }
+        .bg-lobby .pins {
+            position: absolute; inset: 0;
+            background-image:
+                radial-gradient(3px 3px at 30% 30%, #d63447, transparent),
+                radial-gradient(3px 3px at 55% 55%, #d63447, transparent),
+                radial-gradient(3px 3px at 70% 25%, #d63447, transparent),
+                radial-gradient(3px 3px at 40% 70%, #d63447, transparent);
+            opacity: 0.5;
+        }
+
+        .grain-overlay {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.05; mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+        }
+
         input, select, button { width: 100%; padding: 10px; margin-top: 10px; box-sizing: border-box; }
         button { background: #ff4757; color: white; border: none; cursor: pointer; font-weight: bold; }
         button:hover { background: #ff6b81; }
@@ -29,26 +131,46 @@
         .top-controls { display: flex; justify-content: space-between; margin-bottom: 15px; }
         .lang-select { width: 100px; padding: 5px; margin: 0; }
         .help-btn { width: auto; padding: 5px 15px; margin: 0; background: #f39c12; }
-        
+
         /* Modal su slinkimo (scroll) pataisymu */
         .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
-        .modal-content { 
-            background: #1e1e1e; 
-            margin: 5% auto; 
-            padding: 20px; 
-            border: 1px solid #888; 
-            width: 90%; 
-            max-width: 500px; 
-            max-height: 80vh; 
-            overflow-y: auto; 
-            border-radius: 8px; 
+        .modal-content {
+            background: #1e1e1e;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border-radius: 8px;
             box-sizing: border-box;
         }
         .close-modal { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
         .summary-li { background: #333; color: #fff; margin-bottom: 5px; padding: 10px; border-radius: 5px; }
     </style>
 </head>
-<body>
+<body class="phase-lobby">
+    <div class="bg-scene">
+        <div class="bg-layer bg-night">
+            <div class="stars"></div>
+            <div class="fog fog1"></div>
+            <div class="fog fog2"></div>
+            <div class="flashlight"></div>
+            <div class="skyline"></div>
+        </div>
+        <div class="bg-layer bg-day">
+            <div class="sun-rays"></div>
+            <div class="dust"></div>
+            <div class="skyline"></div>
+        </div>
+        <div class="bg-layer bg-lobby">
+            <div class="searchlight"></div>
+            <div class="pins"></div>
+        </div>
+    </div>
+    <div class="grain-overlay"></div>
+
     <div class="card">
         <div class="top-controls">
             <select id="langSelect" class="lang-select" onchange="changeLanguage()">
@@ -69,7 +191,7 @@
             <input type="text" id="roomCodeInput" placeholder="Enter room code" data-i18n-ph="ph_room">
             <button class="secondary-btn" onclick="joinRoom()" data-i18n="btn_join">Join Existing Room</button>
         </div>
-        
+
         <div id="lobby-screen" style="display:none;">
             <div class="room-tag"><span data-i18n="lbl_room">Room</span>: <span id="displayRoomCode"></span></div>
             <h2 data-i18n="title_lobby">Lobby</h2>
@@ -85,7 +207,7 @@
             <h2 id="phaseTitle">Phase</h2>
             <p id="roleDisplay" style="font-weight: bold; color: #eccc68;"></p>
             <p id="statusMessage"></p>
-            
+
             <div id="defenseSection" class="defense-box" style="display:none;">
                 <h3 data-i18n="title_defense">Gynybinė Kalba</h3>
                 <p><b id="accusedNameDisplay"></b> <span data-i18n="msg_defense_speech">sako gynybinę kalbą. Ar išmesti šį žaidėją?</span></p>

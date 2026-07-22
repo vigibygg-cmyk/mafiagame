@@ -1,3 +1,8 @@
+function setBackgroundPhase(phase) {
+    document.body.classList.remove('phase-night', 'phase-day', 'phase-lobby');
+    document.body.classList.add('phase-' + phase);
+}
+
 const socket = io('https://mafia-muw1.onrender.com');
 
 let myRole = null;
@@ -217,6 +222,7 @@ function openHelp() { document.getElementById('helpModal').style.display = 'bloc
 function closeHelp() { document.getElementById('helpModal').style.display = 'none'; }
 
 window.onload = () => {
+    setBackgroundPhase('lobby');
     changeLanguage(); 
     const savedName = sessionStorage.getItem('mafia_player_name');
     const savedRoom = sessionStorage.getItem('mafia_room_code');
@@ -271,6 +277,7 @@ function updateHostUI(players) {
 }
 
 socket.on('update_players', (data) => {
+    setBackgroundPhase('lobby');
     sessionStorage.setItem('mafia_room_code', data.roomCode);
     document.getElementById('displayRoomCode').textContent = data.roomCode;
     document.getElementById('login-screen').style.display = 'none';
@@ -337,6 +344,7 @@ socket.on('phase_change', (data) => {
     defenseBox.style.display = 'none';
 
     if (currentPhase === 'NIGHT') {
+        setBackgroundPhase('night');
         title.textContent = t('PHASE_NIGHT');
         timerBox.style.display = 'block';
         if (!myStatus) statusMsg.textContent = t('MSG_DEAD');
@@ -345,10 +353,12 @@ socket.on('phase_change', (data) => {
         else if (myRole === 'ROLE_DETECTIVE') statusMsg.textContent = t('MSG_DETECTIVE_ACTION');
         else statusMsg.textContent = t('MSG_CITIZEN_ACTION');
     } else if (currentPhase === 'DAY_VOTING') {
+        setBackgroundPhase('day');
         title.textContent = t('PHASE_DAY');
         let txt = data.killedPlayer ? `${t('MSG_DAY_DEATH')} ${data.killedPlayer}.` : t('MSG_DAY_NO_DEATH');
         statusMsg.textContent = txt + ' ' + t('MSG_VOTE');
     } else if (currentPhase === 'DAY_DEFENSE') {
+        setBackgroundPhase('day');
         title.textContent = t('PHASE_DEFENSE');
         document.getElementById('accusedNameDisplay').textContent = data.accusedName;
         if (myStatus && data.accusedId !== socket.id) {
@@ -362,6 +372,7 @@ socket.on('phase_change', (data) => {
 socket.on('detective_result', (res) => alert(res.isMafia ? t('ALERT_DETECT_MAFIA') : t('ALERT_DETECT_CITIZEN')));
 
 socket.on('game_over', (data) => {
+    setBackgroundPhase('day');
     document.getElementById('game-screen').style.display = 'none';
     document.getElementById('summary-screen').style.display = 'block';
     document.getElementById('winnerText').textContent = t(data.winner);
