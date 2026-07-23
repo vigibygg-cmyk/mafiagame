@@ -51,6 +51,44 @@
             50%  { transform: translate(60vw, 40vh); }
             100% { transform: translate(0,0); }
         }
+
+        .bg-night .moon {
+            position: absolute; top: 8%; left: 18%; width: 64px; height: 64px; border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #fff9e2 0%, #efe6b8 55%, #cdc190 100%);
+            box-shadow: 0 0 45px 12px rgba(255,250,220,0.22);
+            animation: moonDrift 260s linear infinite;
+        }
+        @keyframes moonDrift { from { transform: translateX(0); } to { transform: translateX(18vw); } }
+
+        .cloud { position: absolute; width: 130px; height: 42px; border-radius: 50px; filter: blur(2px); }
+        .cloud::before, .cloud::after { content: ''; position: absolute; border-radius: 50%; background: inherit; }
+        .cloud::before { width: 64px; height: 64px; top: -32px; left: 14px; }
+        .cloud::after  { width: 50px; height: 50px; top: -22px; left: 66px; }
+        .bg-night .cloud { background: rgba(45,50,80,0.45); }
+        .bg-night .cloud1 { top: 14%; left: -20%; animation: driftCloud 90s linear infinite; }
+        .bg-night .cloud2 { top: 22%; left: -40%; transform: scale(0.7); animation: driftCloud 130s linear infinite; animation-delay: -30s; opacity: 0.8; }
+        @keyframes driftCloud { from { transform: translateX(0); } to { transform: translateX(140vw); } }
+
+        .bird { position: relative; width: 20px; height: 10px; }
+        .bird::before, .bird::after {
+            content: ''; position: absolute; top: 0; width: 10px; height: 10px;
+            border-top: 2px solid rgba(255,255,255,0.55); border-radius: 50% 50% 0 0;
+            animation: flap 0.7s ease-in-out infinite alternate;
+        }
+        .bird::before { left: 0; transform-origin: right center; transform: rotate(35deg); }
+        .bird::after  { left: 9px; transform-origin: left center; transform: rotate(-35deg) scaleX(-1); }
+        @keyframes flap { from { transform: rotate(15deg); } to { transform: rotate(55deg); } }
+
+        .bg-night .flock { position: absolute; top: 30%; left: -10%; display: flex; gap: 10px; animation: flyBy 55s linear infinite; }
+        .bg-night .flock .bird::before, .bg-night .flock .bird::after { border-top-color: rgba(20,20,30,0.55); }
+        .bg-night .flock .bird:nth-child(2) { transform: translateY(6px); }
+        .bg-night .flock .bird:nth-child(3) { transform: translateY(-4px); }
+        @keyframes flyBy {
+            0%   { transform: translate(0, 0); opacity: 0; }
+            5%   { opacity: 0.8; }
+            35%  { transform: translate(130vw, -18vh); opacity: 0.8; }
+            40%, 100% { opacity: 0; transform: translate(130vw, -18vh); }
+        }
         .bg-night .skyline, .bg-day .skyline {
             position: absolute; bottom: 0; left: 0; width: 100%; height: 18vh;
             background:
@@ -81,6 +119,26 @@
             animation: driftUp 40s linear infinite;
         }
         @keyframes driftUp { from { transform: translateY(0); opacity: 0.8; } to { transform: translateY(-60vh); opacity: 0; } }
+
+        .bg-day .cloud { background: rgba(255,255,255,0.65); }
+        .bg-day .cloud1 { top: 10%; left: -20%; animation: driftCloud 75s linear infinite; }
+        .bg-day .cloud2 { top: 20%; left: -45%; transform: scale(0.65); animation: driftCloud 110s linear infinite; animation-delay: -20s; opacity: 0.85; }
+        .bg-day .cloud3 { top: 6%; left: -60%; transform: scale(0.5); animation: driftCloud 95s linear infinite; animation-delay: -55s; opacity: 0.7; }
+
+        .bg-day .flock { position: absolute; top: 25%; left: -10%; display: flex; gap: 12px; animation: flyBy 40s linear infinite; animation-delay: -8s; }
+        .bg-day .flock .bird::before, .bg-day .flock .bird::after { border-top-color: rgba(70,55,25,0.55); }
+        .bg-day .flock .bird:nth-child(2) { transform: translateY(6px); }
+        .bg-day .flock .bird:nth-child(3) { transform: translateY(-4px); }
+
+        .bg-day .rainbow {
+            position: absolute; top: -12vmax; left: 5%; width: 42vmax; height: 42vmax; border-radius: 50%;
+            background: conic-gradient(#e74c3c, #f39c12, #f1c40f, #2ecc71, #3498db, #8e44ad, transparent 58%);
+            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 16px), #000 calc(100% - 15px));
+            mask: radial-gradient(farthest-side, transparent calc(100% - 16px), #000 calc(100% - 15px));
+            opacity: 0;
+            animation: rainbowFade 70s ease-in-out infinite;
+        }
+        @keyframes rainbowFade { 0%, 78% { opacity: 0; } 85%, 93% { opacity: 0.4; } 100% { opacity: 0; } }
 
         .bg-lobby { background: linear-gradient(180deg, #1a140f 0%, #241c14 100%); }
         .bg-lobby .searchlight {
@@ -154,6 +212,10 @@
     <div class="bg-scene">
         <div class="bg-layer bg-night">
             <div class="stars"></div>
+            <div class="moon"></div>
+            <div class="cloud cloud1"></div>
+            <div class="cloud cloud2"></div>
+            <div class="flock"><div class="bird"></div><div class="bird"></div><div class="bird"></div></div>
             <div class="fog fog1"></div>
             <div class="fog fog2"></div>
             <div class="flashlight"></div>
@@ -161,6 +223,11 @@
         </div>
         <div class="bg-layer bg-day">
             <div class="sun-rays"></div>
+            <div class="rainbow"></div>
+            <div class="cloud cloud1"></div>
+            <div class="cloud cloud2"></div>
+            <div class="cloud cloud3"></div>
+            <div class="flock"><div class="bird"></div><div class="bird"></div><div class="bird"></div></div>
             <div class="dust"></div>
             <div class="skyline"></div>
         </div>

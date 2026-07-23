@@ -28,6 +28,9 @@ const I18N = {
         MSG_DOCTOR_ACTION: "Pasirinkite, ką gydyti:", MSG_DETECTIVE_ACTION: "Pasirinkite, ką patikrinti:",
         MSG_CITIZEN_ACTION: "Patruliuokite (Spaudinėkite ekrane kamufliažui):", MSG_DAY_NO_DEATH: "Naktis praėjo ramiai.",
         MSG_DAY_DEATH: "Šią naktį nužudytas:", MSG_VOTE: "Balsuokite, kas kelia įtarimų:",
+        MSG_DOCTOR_SUCCESS: "🏥 Gydytojas sėkmingai išgelbėjo auką!", MSG_DOCTOR_FAIL: "🏥 Gydytojui nepavyko išgelbėti.",
+        MSG_DETECTIVE_SUCCESS: "🕵️ Detektyvo tyrimas: sėkmingas, rastas mafijos narys!", MSG_DETECTIVE_FAIL: "🕵️ Detektyvo tyrimas: nesėkmingas.",
+        ERR_BAD_NAME: "Įveskite tinkamą vardą (1-20 simbolių).",
         BTN_SELECT: "Pasirinkti", BTN_SELECTED: "Pasirinkta", BTN_VOTE: "Balsuoti", BTN_VOTED: "Pabalsuota",
         BTN_PATROL: "Stebėti", BTN_PATROLLED: "Patikrinta",
         ALERT_DETECT_MAFIA: "Detektyvo ataskaita: Žaidėjas yra MAFIJA!", ALERT_DETECT_CITIZEN: "Detektyvo ataskaita: Žaidėjas yra TAIKUS.",
@@ -92,6 +95,9 @@ const I18N = {
         MSG_DOCTOR_ACTION: "Select someone to heal:", MSG_DETECTIVE_ACTION: "Select someone to investigate:",
         MSG_CITIZEN_ACTION: "Patrol (Tap screen for camouflage):", MSG_DAY_NO_DEATH: "Peaceful night, no one died.",
         MSG_DAY_DEATH: "Killed tonight:", MSG_VOTE: "Vote for the suspect:",
+        MSG_DOCTOR_SUCCESS: "🏥 The doctor successfully saved the victim!", MSG_DOCTOR_FAIL: "🏥 The doctor failed to save anyone.",
+        MSG_DETECTIVE_SUCCESS: "🕵️ Detective's investigation: successful, a mafia member was found!", MSG_DETECTIVE_FAIL: "🕵️ Detective's investigation: unsuccessful.",
+        ERR_BAD_NAME: "Please enter a valid name (1-20 characters).",
         BTN_SELECT: "Select", BTN_SELECTED: "Selected", BTN_VOTE: "Vote", BTN_VOTED: "Voted",
         BTN_PATROL: "Watch", BTN_PATROLLED: "Checked",
         ALERT_DETECT_MAFIA: "Detective Report: Player is MAFIA!", ALERT_DETECT_CITIZEN: "Detective Report: Player is INNOCENT.",
@@ -156,6 +162,9 @@ const I18N = {
         MSG_DOCTOR_ACTION: "Velg hvem du vil beskytte:", MSG_DETECTIVE_ACTION: "Velg hvem du vil etterforske:",
         MSG_CITIZEN_ACTION: "Patruljer (Trykk på skjermen for kamuflasje):", MSG_DAY_NO_DEATH: "Fredelig natt.",
         MSG_DAY_DEATH: "Drept i natt:", MSG_VOTE: "Stem på den mistenkte:",
+        MSG_DOCTOR_SUCCESS: "🏥 Legen reddet offeret!", MSG_DOCTOR_FAIL: "🏥 Legen klarte ikke å redde noen.",
+        MSG_DETECTIVE_SUCCESS: "🕵️ Detektivens etterforskning: vellykket, et mafiamedlem ble funnet!", MSG_DETECTIVE_FAIL: "🕵️ Detektivens etterforskning: mislykket.",
+        ERR_BAD_NAME: "Vennligst skriv inn et gyldig navn (1-20 tegn).",
         BTN_SELECT: "Velg", BTN_SELECTED: "Valgt", BTN_VOTE: "Stemme", BTN_VOTED: "Har stemt",
         BTN_PATROL: "Sjekk", BTN_PATROLLED: "Sjekket",
         ALERT_DETECT_MAFIA: "Detektivrapport: Spilleren er MAFIA!", ALERT_DETECT_CITIZEN: "Detektivrapport: Spilleren er USKYLDIG.",
@@ -317,9 +326,11 @@ socket.on('mafia_votes_update', (votesSummary) => {
 });
 
 let lastPlayersList = [];
+let myNightPick = null; // gydytojo/detektyvo šios nakties pasirinkimas (leidžiama keisti iki nakties pabaigos)
 
 socket.on('phase_change', (data) => {
     currentPhase = data.phase;
+    if (data.phase === 'NIGHT') myNightPick = null;
     sessionStorage.setItem('mafia_room_code', data.roomCode);
     lastPlayersList = data.players;
 
@@ -356,6 +367,10 @@ socket.on('phase_change', (data) => {
         setBackgroundPhase('day');
         title.textContent = t('PHASE_DAY');
         let txt = data.killedPlayer ? `${t('MSG_DAY_DEATH')} ${data.killedPlayer}.` : t('MSG_DAY_NO_DEATH');
+        if (data.doctorOutcome === 'SUCCESS') txt += ' ' + t('MSG_DOCTOR_SUCCESS');
+        else if (data.doctorOutcome === 'FAIL') txt += ' ' + t('MSG_DOCTOR_FAIL');
+        if (data.detectiveOutcome === 'SUCCESS') txt += ' ' + t('MSG_DETECTIVE_SUCCESS');
+        else if (data.detectiveOutcome === 'FAIL') txt += ' ' + t('MSG_DETECTIVE_FAIL');
         statusMsg.textContent = txt + ' ' + t('MSG_VOTE');
     } else if (currentPhase === 'DAY_DEFENSE') {
         setBackgroundPhase('day');
@@ -369,7 +384,6 @@ socket.on('phase_change', (data) => {
     renderGamePlayers(data.players);
 });
 
-socket.on('detective_result', (res) => alert(res.isMafia ? t('ALERT_DETECT_MAFIA') : t('ALERT_DETECT_CITIZEN')));
 
 socket.on('game_over', (data) => {
     setBackgroundPhase('day');
@@ -415,7 +429,21 @@ function renderGamePlayers(players) {
                 const btn = document.createElement('button');
                 btn.className = 'action-btn';
                 
-                if (['ROLE_MAFIA', 'ROLE_DOCTOR', 'ROLE_DETECTIVE'].includes(myRole)) {
+                if (myRole === 'ROLE_DOCTOR' || myRole === 'ROLE_DETECTIVE') {
+                    if (p.id === myNightPick) {
+                        btn.textContent = t('BTN_SELECTED');
+                        btn.disabled = true; // savęs dar kartą "pasirinkti" nereikia - jau pažymėtas
+                    } else {
+                        btn.textContent = t('BTN_SELECT');
+                        btn.onclick = () => {
+                            socket.emit('night_action', p.id);
+                            myNightPick = p.id;
+                            // Perpiešiame visą sąrašą - ankstesnis pažymėjimas automatiškai nuimamas,
+                            // lieka pažymėtas tik paskutinis pasirinkimas.
+                            renderGamePlayers(lastPlayersList);
+                        };
+                    }
+                } else if (myRole === 'ROLE_MAFIA') {
                     btn.textContent = t('BTN_SELECT');
                     btn.onclick = () => {
                         socket.emit('night_action', p.id);
