@@ -3,6 +3,18 @@ function setBackgroundPhase(phase) {
     document.body.classList.add('phase-' + phase);
 }
 
+// Stabilus žaidėjo identifikatorius - išlieka per refresh (skirtingai nei socket.id, kuris keičiasi
+// kiekvieną kartą prisijungus iš naujo). Tai leidžia serveriui saugiai atpažinti "tą patį" žaidėją.
+function getOrCreatePlayerToken() {
+    let token = sessionStorage.getItem('mafia_player_token');
+    if (!token) {
+        token = 'p_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 10);
+        sessionStorage.setItem('mafia_player_token', token);
+    }
+    return token;
+}
+const myPlayerToken = getOrCreatePlayerToken();
+
 const socket = io('https://mafia-muw1.onrender.com');
 
 let myRole = null;
@@ -220,6 +232,7 @@ function t(key) { return I18N[currentLang][key] || key; }
 
 function changeLanguage() {
     currentLang = document.getElementById('langSelect').value;
+    sessionStorage.setItem('mafia_lang', currentLang);
     document.title = t('GAME_TITLE');
     document.querySelectorAll('[data-i18n]').forEach(el => el.innerHTML = t(el.getAttribute('data-i18n')));
     document.querySelectorAll('[data-i18n-ph]').forEach(el => el.placeholder = t(el.getAttribute('data-i18n-ph')));
@@ -232,13 +245,15 @@ function closeHelp() { document.getElementById('helpModal').style.display = 'non
 
 window.onload = () => {
     setBackgroundPhase('lobby');
-    changeLanguage(); 
+    const savedLang = sessionStorage.getItem('mafia_lang');
+    if (savedLang) document.getElementById('langSelect').value = savedLang;
+    changeLanguage();
     const savedName = sessionStorage.getItem('mafia_player_name');
     const savedRoom = sessionStorage.getItem('mafia_room_code');
     if (savedName && savedRoom) {
         document.getElementById('playerName').value = savedName;
         document.getElementById('roomCodeInput').value = savedRoom;
-        socket.emit('join_game', { playerName: savedName, roomCode: savedRoom });
+        socket.emit('join_game', { playerName: savedName, roomCode: savedRoom, token: myPlayerToken });
     }
 };
 
@@ -246,7 +261,7 @@ function createRoom() {
     const name = document.getElementById('playerName').value.trim();
     if (!name) return alert(t('ph_name') + '!');
     sessionStorage.setItem('mafia_player_name', name);
-    socket.emit('join_game', { playerName: name, roomCode: null });
+    socket.emit('join_game', { playerName: name, roomCode: null, token: myPlayerToken });
 }
 
 function joinRoom() {
@@ -255,7 +270,7 @@ function joinRoom() {
     if (!name) return alert(t('ph_name') + '!');
     if (!roomCode) return alert(t('ph_room') + '!');
     sessionStorage.setItem('mafia_player_name', name);
-    socket.emit('join_game', { playerName: name, roomCode: roomCode });
+    socket.emit('join_game', { playerName: name, roomCode: roomCode, token: myPlayerToken });
 }
 
 function requestGameStart() { socket.emit('start_game'); }
@@ -275,8 +290,7 @@ function sendDefenseVote(confirmElimination) {
 }
 
 function updateHostUI(players) {
-    const myName = sessionStorage.getItem('mafia_player_name');
-    const me = players.find(p => p.name.toLowerCase() === (myName ? myName.toLowerCase() : ''));
+    const me = players.find(p => p.id === myPlayerToken);
     amIHost = me ? me.isHost : false;
 
     document.getElementById('startGameBtn').style.display = amIHost ? 'block' : 'none';
@@ -376,7 +390,7 @@ socket.on('phase_change', (data) => {
         setBackgroundPhase('day');
         title.textContent = t('PHASE_DEFENSE');
         document.getElementById('accusedNameDisplay').textContent = data.accusedName;
-        if (myStatus && data.accusedId !== socket.id) {
+        if (myStatus && data.accusedId !== myPlayerToken) {
             defenseBox.style.display = 'block';
         }
     }
